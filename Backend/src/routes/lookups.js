@@ -15,6 +15,21 @@ router.get("/books", async (_req, res, next) => {
    }
 });
 
+router.delete("/books/:isbn", async (req, res, next) => {
+   try {
+      const { isbn } = req.params;
+      const result = await pool.query("DELETE FROM book WHERE ISBN = $1", [isbn]);
+      
+      if (result.rowCount === 0) {
+         return res.status(404).json({ mensaje: "Libro no encontrado" });
+      }
+
+      res.json({ mensaje: "Libro eliminado correctamente" });
+   } catch (err) {
+      next(err);
+   }
+});
+
 router.get("/users", async (_req, res, next) => {
    try {
       const { rows } = await pool.query("SELECT * FROM users ORDER BY User_Id");

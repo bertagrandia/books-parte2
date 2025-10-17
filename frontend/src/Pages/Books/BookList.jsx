@@ -8,7 +8,7 @@ export default function BookList() {
 
    const cargarLibros = async () => {
       try {
-         const { data } = await api.get("/libros?limit=10");
+         const { data } = await api.get("/books");
 
          setLibros(data);
       } catch (error) {
@@ -27,7 +27,7 @@ export default function BookList() {
       if (!confirm("¿Eliminar este libro?")) return;
 
       try {
-         await api.delete(`/libros/${isbn}`);
+         await api.delete(`/books/${isbn}`);
          cargarLibros();
       } catch (error) {
          alert("Error al eliminar el libro", error);
